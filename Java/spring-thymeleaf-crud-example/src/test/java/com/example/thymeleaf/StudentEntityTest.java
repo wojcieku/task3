@@ -50,6 +50,18 @@ public class StudentEntityTest {
     }
 
     @Test
+    public void testStudentCreation_SQLInjectionInNameAndEmail() {
+        assertThrows(RuntimeException.class, () -> {
+                    Student student = new Student();
+                    student.setName("-- or # ");
+                    student.setBirthday(LocalDate.now());
+                    student.setAddress(new Address());
+                    student.setEmail("-- or # ");
+                }
+        );
+    }
+
+    @Test
     public void testStudentCreation_extremeDataNameAndEmail() {
         assertThrows(RuntimeException.class, () -> {
                     Student student = new Student();
